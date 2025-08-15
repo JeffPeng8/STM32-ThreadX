@@ -1,0 +1,7 @@
+../Core/Src/app_threadx.c:69:6:HAL_UART_RxCpltCallback	3
+../Core/Src/app_threadx.c:109:6:App_ThreadX_Init	1
+../Core/Src/app_threadx.c:135:6:MX_ThreadX_Init	1
+../Core/Src/app_threadx.c:151:6:Task1_Init	2
+../Core/Src/app_threadx.c:193:6:Task2_Init	2
+../Core/Src/app_threadx.c:230:6:Task3_Init	2
+../Core/Src/app_threadx.c:267:6:Task4_Init	2
