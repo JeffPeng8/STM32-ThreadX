@@ -135,6 +135,9 @@ UINT App_ThreadX_Init(VOID *memory_ptr)
 void MX_ThreadX_Init(void)
 {
   /* USER CODE BEGIN  Before_Kernel_Start */
+	char *border = "\r\n------------------------------------------------\r\n";
+	HAL_UART_Transmit(&huart2, (uint8_t *)border, strlen(border), 2000);
+
 	HAL_UART_Receive_IT(&huart2, &rx_data, 1);
 
   /* USER CODE END  Before_Kernel_Start */
