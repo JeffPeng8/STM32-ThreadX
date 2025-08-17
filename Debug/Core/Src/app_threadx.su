@@ -1,0 +1,6 @@
+../Core/Src/app_threadx.c:79:6:App_ThreadX_Init	56	static
+../Core/Src/app_threadx.c:103:6:MX_ThreadX_Init	16	static
+../Core/Src/app_threadx.c:119:6:PT_Callback	24	static
+../Core/Src/app_threadx.c:125:6:OS_Callback	16	static
+../Core/Src/app_threadx.c:130:6:UART_Task	24	static
+../Core/Src/app_threadx.c:142:6:LED_Task	16	static
