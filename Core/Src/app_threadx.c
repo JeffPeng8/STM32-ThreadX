@@ -62,6 +62,7 @@ TX_THREAD ReceiverTask1;
 uint8_t rx_data = 0;
 
 ULONG queue_storage[5];
+UINT queue_status;
 
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 {
@@ -111,7 +112,18 @@ UINT App_ThreadX_Init(VOID *memory_ptr)
   /* USER CODE END App_ThreadX_MEM_POOL */
 
   /* USER CODE BEGIN App_ThreadX_Init */
-  tx_queue_create(&Queue1, "Queue 1", 1, queue_storage, sizeof(queue_storage));
+  queue_status = tx_queue_create(&Queue1, "Queue 1", 1, queue_storage, sizeof(queue_storage));
+
+	if(queue_status != TX_SUCCESS)
+	{
+		char *str = "\r\n\Error: Cannot Create Integer Queue/r/n";
+		HAL_UART_Transmit(&huart2, (uint8_t*)str, strlen(str), 2000);
+	}
+	else
+	{
+		char *str = "\r\nInteger Queue Created Successfully\r\n";
+		HAL_UART_Transmit(&huart2, (uint8_t*)str, strlen(str), 2000);
+	}
 
   tx_thread_create(&SenderTask1, "SenderTask1", SenderTask1_Init, 0, threadstack1, sizeof(threadstack1), 1, 1, 0, TX_AUTO_START);
   tx_thread_create(&SenderTask2, "SenderTask2", SenderTask2_Init, 0, threadstack2, sizeof(threadstack2), 2, 2, 0, TX_AUTO_START);
@@ -155,7 +167,13 @@ void SenderTask1_Init(ULONG thread_input)
 		char *str = "\r\n\nEntered Sender Task 1, Sending Data To Queue\r\n";
 		HAL_UART_Transmit(&huart2, (uint8_t *)str, strlen(str), 2000);
 
-		if(tx_queue_send(&Queue1, &data, TX_WAIT_FOREVER) == TX_SUCCESS)
+//		if(tx_queue_send(&Queue1, &data, TX_WAIT_FOREVER) == TX_SUCCESS)
+//		{
+//			char *str2 = "\r\nSuccessfully Sent Data To Queue\r\n";
+//			HAL_UART_Transmit(&huart2, (uint8_t *)str2, strlen(str2), 2000);
+//		}
+
+		if(tx_queue_send(&Queue1, &data, TX_NO_WAIT) == TX_SUCCESS)
 		{
 			char *str2 = "\r\nSuccessfully Sent Data To Queue\r\n";
 			HAL_UART_Transmit(&huart2, (uint8_t *)str2, strlen(str2), 2000);
@@ -177,7 +195,13 @@ void SenderTask2_Init(ULONG thread_input)
 		char *str = "\r\n\nEntered Sender Task 2, Sending Data To Queue\r\n";
 		HAL_UART_Transmit(&huart2, (uint8_t *)str, strlen(str), 2000);
 
-		if(tx_queue_send(&Queue1, &data, TX_WAIT_FOREVER) == TX_SUCCESS)
+//		if(tx_queue_send(&Queue1, &data, TX_WAIT_FOREVER) == TX_SUCCESS)
+//		{
+//			char *str2 = "\r\nSuccessfully Sent Data To Queue\r\n";
+//			HAL_UART_Transmit(&huart2, (uint8_t *)str2, strlen(str2), 2000);
+//		}
+
+		if(tx_queue_send(&Queue1, &data, TX_NO_WAIT) == TX_SUCCESS)
 		{
 			char *str2 = "\r\nSuccessfully Sent Data To Queue\r\n";
 			HAL_UART_Transmit(&huart2, (uint8_t *)str2, strlen(str2), 2000);

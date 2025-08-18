@@ -92,6 +92,8 @@ int main(void)
   MX_USART2_UART_Init();
   /* USER CODE BEGIN 2 */
 
+  // NOTE: Priority ordering with queues in ThreadX DOES NOT work the same way as it does in FreeRTOS
+
   /* USER CODE END 2 */
 
   MX_ThreadX_Init();
