@@ -64,8 +64,8 @@ all: main-build
 main-build: threadx_timer.elf secondary-outputs
 
 # Tool invocations
-threadx_timer.elf threadx_timer.map: $(OBJS) $(USER_OBJS) C:\STM32\threadx_timer\STM32L476RGTX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "threadx_timer.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\STM32\threadx_timer\STM32L476RGTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="threadx_timer.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+threadx_timer.elf threadx_timer.map: $(OBJS) $(USER_OBJS) C:\Users\jeffreyp\work\personal\threadx_timer\STM32L476RGTX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "threadx_timer.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\Users\jeffreyp\work\personal\threadx_timer\STM32L476RGTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="threadx_timer.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 

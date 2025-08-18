@@ -2,5 +2,5 @@
 ../Core/Src/app_threadx.c:103:6:MX_ThreadX_Init	1
 ../Core/Src/app_threadx.c:119:6:PT_Callback	1
 ../Core/Src/app_threadx.c:125:6:OS_Callback	1
-../Core/Src/app_threadx.c:130:6:UART_Task	1
-../Core/Src/app_threadx.c:142:6:LED_Task	2
+../Core/Src/app_threadx.c:133:6:UART_Task	1
+../Core/Src/app_threadx.c:145:6:LED_Task	2

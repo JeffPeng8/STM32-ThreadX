@@ -125,6 +125,9 @@ void PT_Callback(ULONG input)
 void OS_Callback(ULONG input)
 {
 	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_RESET);
+
+//	char *str = "\r\nSending From One Shot TIM\r\n";
+//	HAL_UART_Transmit(&huart2, (uint8_t *)str, strlen(str), 100);
 }
 
 void UART_Task(ULONG thread_input)
@@ -143,9 +146,13 @@ void LED_Task(ULONG thread_input)
 {
 	while(1)
 	{
+		// NOTE: PC13 is pulled HIGH (1) by default
+		// So this if-statement is checking if B1 has been pressed
+
 		if(!(HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_13)))
 		{
 			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_SET);
+			tx_timer_change(&osTIM, 400, 0);
 			tx_timer_activate(&osTIM);
 		}
 
