@@ -89,6 +89,28 @@ UINT App_ThreadX_Init(VOID *memory_ptr)
   mutex_status = tx_mutex_create(&Mutex1, "Mutex1", TX_INHERIT);
   sem_status = tx_semaphore_create(&BinSem1, "BinSem1", 1);
 
+  if(mutex_status == TX_SUCCESS)
+  {
+	  char *str = "\r\nMutex Successfully Created\r\n";
+	  HAL_UART_Transmit(&huart2, (uint8_t*)str, strlen(str), 2000);
+  }
+  else
+  {
+	  char *str = "\r\nError: Cannot Create Mutex\r\n";
+	  HAL_UART_Transmit(&huart2, (uint8_t*)str, strlen(str), 2000);
+  }
+
+  if(sem_status == TX_SUCCESS)
+  {
+	  char *str = "\r\nSemaphore Successfully Created\r\n";
+	  HAL_UART_Transmit(&huart2, (uint8_t*)str, strlen(str), 2000);
+  }
+  else
+  {
+	  char *str = "\r\nError: Cannot Create Semaphore\r\n";
+	  HAL_UART_Transmit(&huart2, (uint8_t*)str, strlen(str), 2000);
+  }
+
   tx_thread_create(&Task1, "Task 1", Task1_Init, 0, threadstack1, sizeof(threadstack1), 1, 1, 0, TX_AUTO_START);
   tx_thread_create(&Task2, "Task 2", Task2_Init, 0, threadstack2, sizeof(threadstack2), 2, 2, 0, TX_AUTO_START);
   tx_thread_create(&Task3, "Task 3", Task3_Init, 0, threadstack3, sizeof(threadstack3), 3, 3, 0, TX_AUTO_START);
@@ -109,28 +131,6 @@ void MX_ThreadX_Init(void)
 	char *border = "\r\n------------------------------------------------\r\n";
 	HAL_UART_Transmit(&huart2, (uint8_t *)border, strlen(border), 2000);
 
-	if(mutex_status == TX_SUCCESS)
-	{
-		char *str = "\r\nMutex Successfully Created\r\n";
-		HAL_UART_Transmit(&huart2, (uint8_t*)str, strlen(str), 2000);
-	}
-	else
-	{
-		char *str = "\r\nError: Cannot Create Mutex\r\n";
-		HAL_UART_Transmit(&huart2, (uint8_t*)str, strlen(str), 2000);
-	}
-
-	if(sem_status == TX_SUCCESS)
-	{
-		char *str = "\r\nSemaphore Successfully Created\r\n";
-		HAL_UART_Transmit(&huart2, (uint8_t*)str, strlen(str), 2000);
-	}
-	else
-	{
-		char *str = "\r\nError: Cannot Create Semaphore\r\n";
-		HAL_UART_Transmit(&huart2, (uint8_t*)str, strlen(str), 2000);
-	}
-
   /* USER CODE END  Before_Kernel_Start */
 
   tx_kernel_enter();
@@ -146,7 +146,7 @@ void Handle_Mutex(char *str)
 	// acquires the mutex
 	tx_mutex_get(&Mutex1, TX_WAIT_FOREVER);
 
-	tx_thread_sleep(500);
+	HAL_Delay(5000);
 	HAL_UART_Transmit(&huart2, (uint8_t *)str, strlen(str), 2000);
 
 	// releases the mutex
@@ -159,7 +159,7 @@ void Handle_BS(char *str)
 	// acquires the semaphore
 	tx_semaphore_get(&BinSem1, TX_WAIT_FOREVER);
 
-	tx_thread_sleep(500);
+	HAL_Delay(5000);
 	HAL_UART_Transmit(&huart2, (uint8_t *)str, strlen(str), 2000);
 
 	// releases the semaphore
