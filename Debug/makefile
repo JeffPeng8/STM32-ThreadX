@@ -64,8 +64,8 @@ all: main-build
 main-build: threadx_count.elf secondary-outputs
 
 # Tool invocations
-threadx_count.elf threadx_count.map: $(OBJS) $(USER_OBJS) C:\Users\jeffreyp\STM32CubeIDE\workspace_1.8.0\threadx_count\STM32L476RGTX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "threadx_count.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\Users\jeffreyp\STM32CubeIDE\workspace_1.8.0\threadx_count\STM32L476RGTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="threadx_count.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+threadx_count.elf threadx_count.map: $(OBJS) $(USER_OBJS) C:\Users\jeffreyp\work\personal\threadx_count\STM32L476RGTX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "threadx_count.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\Users\jeffreyp\work\personal\threadx_count\STM32L476RGTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="threadx_count.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 

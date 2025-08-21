@@ -66,17 +66,15 @@ int indx = 0;
 
 uint8_t rx_data = 0;
 
+UINT sem_status;
+
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 {
 	if(huart->Instance == USART2)
 	{
 		if(rx_data == 'r')
 		{
-			// Context switching from ISRs is not automatic in FreeRTOS...
-			//..but it IS automatic in ThreadX
-			// As a result, there's no need to use a flag like xHigherPriorityTaskWoken in this code here
-
-			// release the semaphore tokens
+			// releases the semaphore tokens
 			tx_semaphore_ceiling_put(&CountSem1, 3);
 			tx_semaphore_ceiling_put(&CountSem1, 3);
 			tx_semaphore_ceiling_put(&CountSem1, 3);
@@ -114,8 +112,18 @@ UINT App_ThreadX_Init(VOID *memory_ptr)
   /* USER CODE END App_ThreadX_MEM_POOL */
 
   /* USER CODE BEGIN App_ThreadX_Init */
-//  tx_semaphore_create(&CountSem1, "CountSem1", 3);
-  tx_semaphore_create(&CountSem1, "CountSem1", 0);
+  sem_status = tx_semaphore_create(&CountSem1, "CountSem1", 0);
+
+  if(sem_status == TX_SUCCESS)
+  {
+	  char *str = "\r\nSemaphore Successfully Created\r\n";
+	  HAL_UART_Transmit(&huart2, (uint8_t*)str, strlen(str), 2000);
+  }
+  else
+  {
+	  char *str = "\r\nError: Cannot Create Semaphore\r\n";
+	  HAL_UART_Transmit(&huart2, (uint8_t*)str, strlen(str), 2000);
+  }
 
   tx_thread_create(&Task1, "Task 1", Task1_Init, 0, threadstack1, sizeof(threadstack1), 1, 1, 0, TX_AUTO_START);
   tx_thread_create(&Task2, "Task 2", Task2_Init, 0, threadstack2, sizeof(threadstack2), 2, 2, 0, TX_AUTO_START);

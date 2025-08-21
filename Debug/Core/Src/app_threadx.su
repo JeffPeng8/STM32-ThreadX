@@ -1,7 +1,7 @@
-../Core/Src/app_threadx.c:69:6:HAL_UART_RxCpltCallback	16	static
-../Core/Src/app_threadx.c:109:6:App_ThreadX_Init	56	static
-../Core/Src/app_threadx.c:135:6:MX_ThreadX_Init	16	static
-../Core/Src/app_threadx.c:154:6:Task1_Init	200	static
-../Core/Src/app_threadx.c:196:6:Task2_Init	200	static
-../Core/Src/app_threadx.c:233:6:Task3_Init	200	static
-../Core/Src/app_threadx.c:270:6:Task4_Init	200	static
+../Core/Src/app_threadx.c:71:6:HAL_UART_RxCpltCallback	16	static
+../Core/Src/app_threadx.c:107:6:App_ThreadX_Init	64	static
+../Core/Src/app_threadx.c:143:6:MX_ThreadX_Init	16	static
+../Core/Src/app_threadx.c:162:6:Task1_Init	200	static
+../Core/Src/app_threadx.c:204:6:Task2_Init	200	static
+../Core/Src/app_threadx.c:241:6:Task3_Init	200	static
+../Core/Src/app_threadx.c:278:6:Task4_Init	200	static

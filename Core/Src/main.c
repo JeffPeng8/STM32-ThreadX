@@ -90,6 +90,8 @@ int main(void)
   MX_USART2_UART_Init();
   /* USER CODE BEGIN 2 */
 
+  // Q: Why does my ThreadX code for counting semaphores not work the same way as my FreeRTOS code?
+
   /* USER CODE END 2 */
 
   MX_ThreadX_Init();
