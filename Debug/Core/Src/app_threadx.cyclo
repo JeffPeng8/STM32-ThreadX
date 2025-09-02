@@ -1,0 +1,5 @@
+../Core/Src/app_threadx.c:85:6:App_ThreadX_Init	3
+../Core/Src/app_threadx.c:132:6:MX_ThreadX_Init	1
+../Core/Src/app_threadx.c:149:6:Task1_Init	1
+../Core/Src/app_threadx.c:171:6:Task2_Init	2
+../Core/Src/app_threadx.c:200:6:Task3_Init	2
