@@ -106,12 +106,12 @@ UINT App_ThreadX_Init(VOID *memory_ptr)
 
   if(event_status == TX_SUCCESS)
   {
-	  char *str = "\r\nEvent Group Successfully Created\r\n";
+	  char *str = "\r\nEvent Flags Successfully Created\r\n";
 	  HAL_UART_Transmit(&huart2, (uint8_t*)str, strlen(str), 2000);
   }
   else
   {
-	  char *str = "\r\nError: Cannot Create Event Group\r\n";
+	  char *str = "\r\nError: Cannot Create Event Flags\r\n";
 	  HAL_UART_Transmit(&huart2, (uint8_t*)str, strlen(str), 2000);
   }
 
@@ -164,7 +164,7 @@ void Task1_Init(ULONG thread_input)
 		tx_mutex_put(&Mutex1);
 		tx_event_flags_set(&Event1, TASK1_READY, TX_OR);
 
-		tx_thread_sleep(1000);
+		tx_thread_sleep(100);
 	}
 }
 
@@ -193,7 +193,7 @@ void Task2_Init(ULONG thread_input)
 		tx_mutex_put(&Mutex1);
 		tx_event_flags_set(&Event1, TASK2_READY, TX_OR);
 
-		tx_thread_sleep(1000);
+		tx_thread_sleep(100);
 	}
 }
 
@@ -221,7 +221,7 @@ void Task3_Init(ULONG thread_input)
 
 		tx_mutex_put(&Mutex1);
 
-		tx_thread_sleep(1000);
+		tx_thread_sleep(100);
 	}
 }
 
