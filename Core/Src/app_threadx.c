@@ -81,7 +81,6 @@ void Thread3_Entry(ULONG thread_input);
   * @param memory_ptr: memory pointer
   * @retval int
   */
-
 UINT App_ThreadX_Init(VOID *memory_ptr)
 {
   UINT ret = TX_SUCCESS;
@@ -135,8 +134,6 @@ void Thread2_Entry(ULONG thread_input)
 		  HAL_UART_Transmit(&huart2, RxMsg, length, 2000);
 		  tx_thread_sleep(100);
 
-//		  tx_thread_sleep(200);
-
 		  if(count2 == 5)
 		  {
 //			  printf("\r\nSuspending Task 1\r\n");
@@ -183,8 +180,6 @@ void Thread3_Entry(ULONG thread_input)
 	{
 		HAL_UART_Transmit(&huart2, task3, sizeof(task3), 2000);
 		tx_thread_sleep(100);
-
-//		tx_thread_sleep(300);
 	}
 }
 
