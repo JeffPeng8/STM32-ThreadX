@@ -96,7 +96,7 @@ int main(void)
   /* USER CODE BEGIN 2 */
 
   // ThreadX Execution Flow:
-  // Mx_ThreadX_Init() → _tx_initialize_kernel_enter → tx_application_define → App_ThreadX_Init( ) → <THREAD_NAME>( )
+  // Mx_ThreadX_Init → _tx_initialize_kernel_enter → tx_application_define → App_ThreadX_Init → <THREAD_NAME>
 
   char *border = "\r\n------------------------------------------------\r\n";
   HAL_UART_Transmit(&huart2, (uint8_t *)border, strlen(border), 2000);

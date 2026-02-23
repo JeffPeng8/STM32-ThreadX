@@ -36,7 +36,8 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-#define STACK_SIZE  1024
+#define STACK_SIZE             1024
+#define MAX_UART_WAIT_TIME     100
 
 /* USER CODE END PD */
 
@@ -121,7 +122,7 @@ void Thread1_Entry(ULONG thread_input)
 {
 	while(1)
 	{
-		HAL_UART_Transmit(&huart2, task1, sizeof(task1), 2000);
+		HAL_UART_Transmit(&huart2, task1, sizeof(task1), MAX_UART_WAIT_TIME);
 		tx_thread_sleep(100);
 	}
 }
@@ -137,21 +138,21 @@ void Thread2_Entry(ULONG thread_input)
 		  if(count2 == 5)
 		  {
 //			  printf("\r\nSuspending Task 1\r\n");
-			  HAL_UART_Transmit(&huart2, suspend1, sizeof(suspend1), 2000);
+			  HAL_UART_Transmit(&huart2, suspend1, sizeof(suspend1), MAX_UART_WAIT_TIME);
 			  tx_thread_suspend(&Thread1);
 		  }
 
 		  if(count2 == 10)
 		  {
 //		      printf("\r\nResuming Task 1\r\n");
-			  HAL_UART_Transmit(&huart2, resume1, sizeof(resume1), 2000);
+			  HAL_UART_Transmit(&huart2, resume1, sizeof(resume1), MAX_UART_WAIT_TIME);
 			  tx_thread_resume(&Thread1);
 		  }
 
 		  if(count2 == 15)
 		  {
 //		      printf("\r\nDelaying Task 2\r\n\r\n");
-			  HAL_UART_Transmit(&huart2, delay2, sizeof(delay2), 2000);
+			  HAL_UART_Transmit(&huart2, delay2, sizeof(delay2), MAX_UART_WAIT_TIME);
 
 			  // Grabs current tick count
 			  ULONG mark = tx_time_get();
@@ -166,7 +167,7 @@ void Thread2_Entry(ULONG thread_input)
 		  if(count2 == 20)
 		  {
 	//		  printf("\r\nTerminating Task 2\r\n");
-			  HAL_UART_Transmit(&huart2, terminate2, sizeof(terminate2), 2000);
+			  HAL_UART_Transmit(&huart2, terminate2, sizeof(terminate2), MAX_UART_WAIT_TIME);
 			  tx_thread_terminate(&Thread2);
 		  }
 
@@ -178,7 +179,7 @@ void Thread3_Entry(ULONG thread_input)
 {
 	while(1)
 	{
-		HAL_UART_Transmit(&huart2, task3, sizeof(task3), 2000);
+		HAL_UART_Transmit(&huart2, task3, sizeof(task3), MAX_UART_WAIT_TIME);
 		tx_thread_sleep(100);
 	}
 }
