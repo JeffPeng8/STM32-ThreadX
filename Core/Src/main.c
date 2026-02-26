@@ -98,6 +98,31 @@ int main(void)
   // ThreadX Execution Flow:
   // Mx_ThreadX_Init → _tx_initialize_kernel_enter → tx_application_define → App_ThreadX_Init → <THREAD_NAME>
 
+  // Tasks (ThreadX):
+  // More commonly known as threads
+  // A task is a single stream of executable instructions that can be paused, resumed, or ran by a scheduler
+  // The scheduler is the OS component that decides which thread gets to execute at any given point in time
+
+  // A thread can be in one of four states: running, ready, blocked, or suspended
+  // NOTE: threads are still considered to be running even when they are stuck in loops and doing nothing productive
+  // Every thread also has a priority, with higher-priority threads always being considered first to run
+  // In a RTOS like ThreadX, the scheduler chooses which thread gets to run based on its set priority and its current state
+  // In other words, it will only run a thread if it is ready and there are no higher-priority threads that are ready...
+  // ...at that exact point in time
+
+  // ThreadX enables virtual concurrency on single-core MCUs because its scheduling is both preemptive and priority-based
+  // In ThreadX, preemptive scheduling means that a higher-priority thread can interrupt a lower-priority one immediately
+  // This makes the system feel more responsive and makes multiple threads look like they’re running in parallel...
+  // ...instead of one at a time
+
+  // For two ready threads of the same priority, ThreadX can share MCU time between them...
+  // ...by giving each thread a fixed “slice” of time to run
+  // When a slice expires, ThreadX rotates to the next ready thread at that same priority
+  // This feature is called time-slicing and makes multiple equal-priority threads look like they’re running together...
+  // ...instead of starving each other out for MCU time
+
+  // NOTE: threads can be created inside another thread, as seen in the Florence Controller FW
+
   char *border = "\r\n------------------------------------------------\r\n";
   HAL_UART_Transmit(&huart2, (uint8_t *)border, strlen(border), 2000);
 
