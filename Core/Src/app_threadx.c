@@ -118,6 +118,8 @@ void MX_ThreadX_Init(void)
 }
 
 /* USER CODE BEGIN 1 */
+
+// Prints the UART logs for task 1
 void Thread1_Entry(ULONG thread_input)
 {
 	while(1)
@@ -127,6 +129,7 @@ void Thread1_Entry(ULONG thread_input)
 	}
 }
 
+// Prints the UART logs for task 2
 void Thread2_Entry(ULONG thread_input)
 {
 	while(1)
@@ -175,6 +178,7 @@ void Thread2_Entry(ULONG thread_input)
 	}
 }
 
+// Prints the UART logs for task 3
 void Thread3_Entry(ULONG thread_input)
 {
 	while(1)
