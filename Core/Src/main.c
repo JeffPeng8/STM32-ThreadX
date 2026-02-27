@@ -123,7 +123,9 @@ int main(void)
   // EXTRA:
   // threads are still considered to be running even when they are stuck in loops and doing nothing productive
   // threads can be created inside another thread, as seen in the Florence Controller FW
-  // time-slicing is an optional feature in ThreadX. The tx_thread_create( ) function is used to enable it per thread
+  // time-slicing is per-thread and optional
+  // You enable or disable it by default at thread creation by setting the time_slice argument in tx_thread_create( )
+  // You can also change the time_slice argument at runtime by calling tx_thread_time_slice_change( )
 
   char *border = "\r\n------------------------------------------------\r\n";
   HAL_UART_Transmit(&huart2, (uint8_t *)border, strlen(border), 2000);
