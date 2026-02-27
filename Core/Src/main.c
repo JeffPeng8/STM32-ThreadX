@@ -104,7 +104,6 @@ int main(void)
   // The scheduler is the OS component that decides which thread gets to execute at any given point in time
 
   // A thread can be in one of four states: running, ready, blocked, or suspended
-  // NOTE: threads are still considered to be running even when they are stuck in loops and doing nothing productive
   // Every thread also has a priority, with higher-priority threads always being considered first to run
   // In a RTOS like ThreadX, the scheduler chooses which thread gets to run based on its set priority and its current state
   // In other words, it will only run a thread if it is ready and there are no higher-priority threads that are ready...
@@ -121,7 +120,10 @@ int main(void)
   // This feature is called time-slicing and makes multiple equal-priority threads look like they’re running together...
   // ...instead of starving each other out for MCU time
 
-  // NOTE: threads can be created inside another thread, as seen in the Florence Controller FW
+  // EXTRA:
+  // threads are still considered to be running even when they are stuck in loops and doing nothing productive
+  // threads can be created inside another thread, as seen in the Florence Controller FW
+  // time-slicing is an optional feature in ThreadX. The tx_thread_create( ) function is used to enable it per thread
 
   char *border = "\r\n------------------------------------------------\r\n";
   HAL_UART_Transmit(&huart2, (uint8_t *)border, strlen(border), 2000);
