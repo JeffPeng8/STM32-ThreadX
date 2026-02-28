@@ -1,5 +1,0 @@
-../Core/Src/app_threadx.c:77:6:App_ThreadX_Init	56	static
-../Core/Src/app_threadx.c:101:6:MX_ThreadX_Init	8	static
-../Core/Src/app_threadx.c:116:6:StartNormalTask	32	static
-../Core/Src/app_threadx.c:138:6:StartHighTask	32	static
-../Core/Src/app_threadx.c:158:6:StartLowTask	24	static
