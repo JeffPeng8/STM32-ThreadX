@@ -1,7 +1,0 @@
-../Core/Src/app_threadx.c:81:6:App_ThreadX_Init	72	static
-../Core/Src/app_threadx.c:128:6:MX_ThreadX_Init	16	static
-../Core/Src/app_threadx.c:144:6:Handle_Mutex	16	static
-../Core/Src/app_threadx.c:157:6:Handle_BS	16	static
-../Core/Src/app_threadx.c:169:6:Task1_Init	32	static
-../Core/Src/app_threadx.c:186:6:Task2_Init	24	static
-../Core/Src/app_threadx.c:203:6:Task3_Init	32	static
