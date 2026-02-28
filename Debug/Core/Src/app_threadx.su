@@ -1,6 +1,0 @@
-../Core/Src/app_threadx.c:67:6:HAL_UART_RxCpltCallback	24	static
-../Core/Src/app_threadx.c:107:6:App_ThreadX_Init	64	static
-../Core/Src/app_threadx.c:142:6:MX_ThreadX_Init	16	static
-../Core/Src/app_threadx.c:161:6:SenderTask1_Init	32	static
-../Core/Src/app_threadx.c:189:6:SenderTask2_Init	32	static
-../Core/Src/app_threadx.c:217:6:ReceiverTask1_Init	88	static
