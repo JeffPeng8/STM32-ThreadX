@@ -38,7 +38,8 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-#define STACK_SIZE  1024
+#define STACK_SIZE             1024
+#define MAX_UART_WAIT_TIME     100
 
 /* USER CODE END PD */
 
@@ -120,17 +121,17 @@ void StartNormalTask(ULONG thread_input)
 	while(1)
 	{
 		char *normal1 = "\r\nEntered Normal Task, Waiting For Semaphore\r\n";
-		HAL_UART_Transmit(&huart2, (uint8_t*)normal1, strlen(normal1), 2000);
+		HAL_UART_Transmit(&huart2, (uint8_t*)normal1, strlen(normal1), MAX_UART_WAIT_TIME);
 
 		tx_semaphore_get(&BinSem1, TX_WAIT_FOREVER);
 
 		char *normal3 = "\r\nSemaphore Obtained By Normal Task\r\n";
-		HAL_UART_Transmit(&huart2, (uint8_t*)normal3, strlen(normal3), 2000);
+		HAL_UART_Transmit(&huart2, (uint8_t*)normal3, strlen(normal3), MAX_UART_WAIT_TIME);
 
 		while(HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_13));
 
 		char *normal2 = "\r\nLeaving Normal Task, Releasing Semaphore\r\n";
-		HAL_UART_Transmit(&huart2, (uint8_t*)normal2, strlen(normal2), 2000);
+		HAL_UART_Transmit(&huart2, (uint8_t*)normal2, strlen(normal2), MAX_UART_WAIT_TIME);
 
 		tx_semaphore_ceiling_put(&BinSem1, 1);
 		tx_thread_sleep(100);
@@ -143,15 +144,15 @@ void StartHighTask(ULONG thread_input)
 	while(1)
 	{
 		char *high1 = "\r\n\r\nEntered High Task, Waiting For Semaphore\r\n";
-		HAL_UART_Transmit(&huart2, (uint8_t*)high1, strlen(high1), 2000);
+		HAL_UART_Transmit(&huart2, (uint8_t*)high1, strlen(high1), MAX_UART_WAIT_TIME);
 
 		tx_semaphore_get(&BinSem1, TX_WAIT_FOREVER);
 
 		char *high3 = "\r\nSemaphore Obtained By High Task\r\n";
-		HAL_UART_Transmit(&huart2, (uint8_t*)high3, strlen(high3), 2000);
+		HAL_UART_Transmit(&huart2, (uint8_t*)high3, strlen(high3), MAX_UART_WAIT_TIME);
 
 		char *high2 = "\r\nLeaving High Task, Releasing Semaphore\r\n";
-		HAL_UART_Transmit(&huart2, (uint8_t*)high2, strlen(high2), 2000);
+		HAL_UART_Transmit(&huart2, (uint8_t*)high2, strlen(high2), MAX_UART_WAIT_TIME);
 
 		tx_semaphore_ceiling_put(&BinSem1, 1);
 		tx_thread_sleep(100);
@@ -164,10 +165,10 @@ void StartLowTask(ULONG thread_input)
 	while(1)
 	{
 		char *low1 = "\r\nEntered Low Task\r\n";
-		HAL_UART_Transmit(&huart2, (uint8_t*)low1, strlen(low1), 2000);
+		HAL_UART_Transmit(&huart2, (uint8_t*)low1, strlen(low1), MAX_UART_WAIT_TIME);
 
 		char *low2 = "\r\nLeaving Low Task\r\n";
-		HAL_UART_Transmit(&huart2, (uint8_t*)low2, strlen(low2), 2000);
+		HAL_UART_Transmit(&huart2, (uint8_t*)low2, strlen(low2), MAX_UART_WAIT_TIME);
 
 		tx_thread_sleep(100);
 	}
