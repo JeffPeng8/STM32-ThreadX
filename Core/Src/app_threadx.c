@@ -114,6 +114,7 @@ void MX_ThreadX_Init(void)
 
 /* USER CODE BEGIN 1 */
 
+// Prints the UART logs for the normal task
 void StartNormalTask(ULONG thread_input)
 {
 	while(1)
@@ -136,6 +137,7 @@ void StartNormalTask(ULONG thread_input)
 	}
 }
 
+// Prints the UART logs for the high task
 void StartHighTask(ULONG thread_input)
 {
 	while(1)
@@ -156,6 +158,7 @@ void StartHighTask(ULONG thread_input)
 	}
 }
 
+// Prints the UART logs for the low task
 void StartLowTask(ULONG thread_input)
 {
 	while(1)
