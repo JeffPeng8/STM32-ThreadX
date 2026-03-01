@@ -38,7 +38,8 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-#define STACK_SIZE  1024
+#define STACK_SIZE             1024
+#define MAX_UART_WAIT_TIME     100
 
 /* USER CODE END PD */
 
@@ -92,23 +93,23 @@ UINT App_ThreadX_Init(VOID *memory_ptr)
   if(mutex_status == TX_SUCCESS)
   {
 	  char *str = "\r\nMutex Successfully Created\r\n";
-	  HAL_UART_Transmit(&huart2, (uint8_t*)str, strlen(str), 2000);
+	  HAL_UART_Transmit(&huart2, (uint8_t*)str, strlen(str), MAX_UART_WAIT_TIME);
   }
   else
   {
 	  char *str = "\r\nError: Cannot Create Mutex\r\n";
-	  HAL_UART_Transmit(&huart2, (uint8_t*)str, strlen(str), 2000);
+	  HAL_UART_Transmit(&huart2, (uint8_t*)str, strlen(str), MAX_UART_WAIT_TIME);
   }
 
   if(sem_status == TX_SUCCESS)
   {
 	  char *str = "\r\nSemaphore Successfully Created\r\n";
-	  HAL_UART_Transmit(&huart2, (uint8_t*)str, strlen(str), 2000);
+	  HAL_UART_Transmit(&huart2, (uint8_t*)str, strlen(str), MAX_UART_WAIT_TIME);
   }
   else
   {
 	  char *str = "\r\nError: Cannot Create Semaphore\r\n";
-	  HAL_UART_Transmit(&huart2, (uint8_t*)str, strlen(str), 2000);
+	  HAL_UART_Transmit(&huart2, (uint8_t*)str, strlen(str), MAX_UART_WAIT_TIME);
   }
 
   tx_thread_create(&Task1, "Task 1", Task1_Init, 0, threadstack1, sizeof(threadstack1), 1, 1, 0, TX_AUTO_START);
@@ -129,7 +130,7 @@ void MX_ThreadX_Init(void)
 {
   /* USER CODE BEGIN  Before_Kernel_Start */
 	char *border = "\r\n------------------------------------------------\r\n";
-	HAL_UART_Transmit(&huart2, (uint8_t *)border, strlen(border), 2000);
+	HAL_UART_Transmit(&huart2, (uint8_t *)border, strlen(border), MAX_UART_WAIT_TIME);
 
   /* USER CODE END  Before_Kernel_Start */
 
@@ -141,26 +142,27 @@ void MX_ThreadX_Init(void)
 }
 
 /* USER CODE BEGIN 1 */
+
 void Handle_Mutex(char *str)
 {
 	// acquires the mutex
 	tx_mutex_get(&Mutex1, TX_WAIT_FOREVER);
 
 	HAL_Delay(5000);
-	HAL_UART_Transmit(&huart2, (uint8_t *)str, strlen(str), 2000);
+	HAL_UART_Transmit(&huart2, (uint8_t *)str, strlen(str), MAX_UART_WAIT_TIME);
 
 	// releases the mutex
 	tx_mutex_put(&Mutex1);
 }
 
-// BS: binary semaphore
+// BS stands for binary semaphore
 void Handle_BS(char *str)
 {
 	// acquires the semaphore
 	tx_semaphore_get(&BinSem1, TX_WAIT_FOREVER);
 
 	HAL_Delay(5000);
-	HAL_UART_Transmit(&huart2, (uint8_t *)str, strlen(str), 2000);
+	HAL_UART_Transmit(&huart2, (uint8_t *)str, strlen(str), MAX_UART_WAIT_TIME);
 
 	// releases the semaphore
 	tx_semaphore_ceiling_put(&BinSem1, 1);
@@ -171,13 +173,14 @@ void Task1_Init(ULONG thread_input)
 	while(1)
 	{
 		char *str = "\r\n\nEntered Task 1\r\n";
-		HAL_UART_Transmit(&huart2, (uint8_t *)str, strlen(str), 2000);
+		HAL_UART_Transmit(&huart2, (uint8_t *)str, strlen(str), MAX_UART_WAIT_TIME);
 
 		char *str2 = "\r\nMutex Obtained By Task 1\r\n";
 		Handle_Mutex(str2);
+//		tx_thread_sleep(500);
 
 		char *str3 = "\r\nLeaving Task 1\r\n";
-		HAL_UART_Transmit(&huart2, (uint8_t *)str3, strlen(str3), 2000);
+		HAL_UART_Transmit(&huart2, (uint8_t *)str3, strlen(str3), MAX_UART_WAIT_TIME);
 
 		tx_thread_sleep(75);
 	}
@@ -188,13 +191,14 @@ void Task2_Init(ULONG thread_input)
 	while(1)
 	{
 		char *str = "\r\n\nEntered Task 2\r\n";
-		HAL_UART_Transmit(&huart2, (uint8_t *)str, strlen(str), 2000);
+		HAL_UART_Transmit(&huart2, (uint8_t *)str, strlen(str), MAX_UART_WAIT_TIME);
 
 //		char *str2 = "\r\nMutex Obtained By Task 2\r\n";
 //		Handle_Mutex(str2);
+////		tx_thread_sleep(500);
 
 		char *str3 = "\r\nLeaving Task 2\r\n";
-		HAL_UART_Transmit(&huart2, (uint8_t *)str3, strlen(str3), 2000);
+		HAL_UART_Transmit(&huart2, (uint8_t *)str3, strlen(str3), MAX_UART_WAIT_TIME);
 
 		tx_thread_sleep(200);
 	}
@@ -205,13 +209,14 @@ void Task3_Init(ULONG thread_input)
 	while(1)
 	{
 		char *str = "\r\n\nEntered Task 3\r\n";
-		HAL_UART_Transmit(&huart2, (uint8_t*)str, strlen(str), 2000);
+		HAL_UART_Transmit(&huart2, (uint8_t*)str, strlen(str), MAX_UART_WAIT_TIME);
 
 		char *str2 = "\r\nMutex Obtained By Task 3\r\n";
 		Handle_Mutex(str2);
+//		tx_thread_sleep(500);
 
 		char *str3 = "\r\nLeaving Task 3\r\n";
-		HAL_UART_Transmit(&huart2, (uint8_t *)str3, strlen(str3), 2000);
+		HAL_UART_Transmit(&huart2, (uint8_t *)str3, strlen(str3), MAX_UART_WAIT_TIME);
 
 		tx_thread_sleep(100);
 	}
