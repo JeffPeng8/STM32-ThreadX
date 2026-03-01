@@ -43,7 +43,8 @@
 
 #define TASKSET1_READY    (TASK1_READY | TASK2_READY)
 
-#define STACK_SIZE  1024
+#define STACK_SIZE             1024
+#define MAX_UART_WAIT_TIME     100
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -96,23 +97,23 @@ UINT App_ThreadX_Init(VOID *memory_ptr)
   if(mutex_status == TX_SUCCESS)
   {
 	  char *str = "\r\nMutex Successfully Created\r\n";
-	  HAL_UART_Transmit(&huart2, (uint8_t*)str, strlen(str), 2000);
+	  HAL_UART_Transmit(&huart2, (uint8_t*)str, strlen(str), MAX_UART_WAIT_TIME);
   }
   else
   {
 	  char *str = "\r\nError: Cannot Create Mutex\r\n";
-	  HAL_UART_Transmit(&huart2, (uint8_t*)str, strlen(str), 2000);
+	  HAL_UART_Transmit(&huart2, (uint8_t*)str, strlen(str), MAX_UART_WAIT_TIME);
   }
 
   if(event_status == TX_SUCCESS)
   {
 	  char *str = "\r\nEvent Flags Successfully Created\r\n";
-	  HAL_UART_Transmit(&huart2, (uint8_t*)str, strlen(str), 2000);
+	  HAL_UART_Transmit(&huart2, (uint8_t*)str, strlen(str), MAX_UART_WAIT_TIME);
   }
   else
   {
 	  char *str = "\r\nError: Cannot Create Event Flags\r\n";
-	  HAL_UART_Transmit(&huart2, (uint8_t*)str, strlen(str), 2000);
+	  HAL_UART_Transmit(&huart2, (uint8_t*)str, strlen(str), MAX_UART_WAIT_TIME);
   }
 
   tx_thread_create(&Task1, "Task 1", Task1_Init, 0, threadstack1, sizeof(threadstack1), 1, 1, 0, TX_AUTO_START);
@@ -133,7 +134,7 @@ void MX_ThreadX_Init(void)
 {
   /* USER CODE BEGIN  Before_Kernel_Start */
   char *border = "\r\n------------------------------------------------\r\n";
-  HAL_UART_Transmit(&huart2, (uint8_t *)border, strlen(border), 2000);
+  HAL_UART_Transmit(&huart2, (uint8_t *)border, strlen(border), MAX_UART_WAIT_TIME);
 
   /* USER CODE END  Before_Kernel_Start */
 
@@ -153,13 +154,13 @@ void Task1_Init(ULONG thread_input)
 		tx_mutex_get(&Mutex1, TX_WAIT_FOREVER);
 
 		char *str = "\r\n\nEntered Task 1\r\n";
-		HAL_UART_Transmit(&huart2, (uint8_t *)str, strlen(str), 2000);
+		HAL_UART_Transmit(&huart2, (uint8_t *)str, strlen(str), MAX_UART_WAIT_TIME);
 
 		char *str2 = "\r\nSetting Bit For Task 1\r\n";
-		HAL_UART_Transmit(&huart2, (uint8_t *)str2, strlen(str2), 2000);
+		HAL_UART_Transmit(&huart2, (uint8_t *)str2, strlen(str2), MAX_UART_WAIT_TIME);
 
 		char *str3 = "\r\nLeaving Task 1\r\n";
-		HAL_UART_Transmit(&huart2, (uint8_t *)str3, strlen(str3), 2000);
+		HAL_UART_Transmit(&huart2, (uint8_t *)str3, strlen(str3), MAX_UART_WAIT_TIME);
 
 		tx_mutex_put(&Mutex1);
 		tx_event_flags_set(&Event1, TASK1_READY, TX_OR);
@@ -179,16 +180,16 @@ void Task2_Init(ULONG thread_input)
 		tx_mutex_get(&Mutex1, TX_WAIT_FOREVER);
 
 		char *str = "\r\n\nEntered Task 2\r\n";
-		HAL_UART_Transmit(&huart2, (uint8_t *)str, strlen(str), 2000);
+		HAL_UART_Transmit(&huart2, (uint8_t *)str, strlen(str), MAX_UART_WAIT_TIME);
 
 		if((bits & TASK1_READY) != 0)
 		{
 			char *str2 = "\r\nTask 1 Bit Detected, Setting Bit For Task 2\r\n";
-			HAL_UART_Transmit(&huart2, (uint8_t *)str2, strlen(str2), 2000);
+			HAL_UART_Transmit(&huart2, (uint8_t *)str2, strlen(str2), MAX_UART_WAIT_TIME);
 		}
 
 		char *str3 = "\r\nLeaving Task 2\r\n";
-		HAL_UART_Transmit(&huart2, (uint8_t *)str3, strlen(str3), 2000);
+		HAL_UART_Transmit(&huart2, (uint8_t *)str3, strlen(str3), MAX_UART_WAIT_TIME);
 
 		tx_mutex_put(&Mutex1);
 		tx_event_flags_set(&Event1, TASK2_READY, TX_OR);
@@ -208,16 +209,16 @@ void Task3_Init(ULONG thread_input)
 		tx_mutex_get(&Mutex1, TX_WAIT_FOREVER);
 
 		char *str = "\r\n\nEntered Task 3\r\n";
-		HAL_UART_Transmit(&huart2, (uint8_t *)str, strlen(str), 2000);
+		HAL_UART_Transmit(&huart2, (uint8_t *)str, strlen(str), MAX_UART_WAIT_TIME);
 
 		if((bits & TASKSET1_READY) == TASKSET1_READY)
 		{
 			char *str2 = "\r\nBits For Tasks 1 & 2 Detected\r\n";
-			HAL_UART_Transmit(&huart2, (uint8_t *)str2, strlen(str2), 2000);
+			HAL_UART_Transmit(&huart2, (uint8_t *)str2, strlen(str2), MAX_UART_WAIT_TIME);
 		}
 
 		char *str3 = "\r\nLeaving Task 3\r\n";
-		HAL_UART_Transmit(&huart2, (uint8_t *)str3, strlen(str3), 2000);
+		HAL_UART_Transmit(&huart2, (uint8_t *)str3, strlen(str3), MAX_UART_WAIT_TIME);
 
 		tx_mutex_put(&Mutex1);
 
