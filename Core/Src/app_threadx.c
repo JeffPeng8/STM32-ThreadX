@@ -38,7 +38,8 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-#define STACK_SIZE  1024
+#define STACK_SIZE             1024
+#define MAX_UART_WAIT_TIME     100
 
 /* USER CODE END PD */
 
@@ -117,12 +118,12 @@ UINT App_ThreadX_Init(VOID *memory_ptr)
   if(sem_status == TX_SUCCESS)
   {
 	  char *str = "\r\nSemaphore Successfully Created\r\n";
-	  HAL_UART_Transmit(&huart2, (uint8_t*)str, strlen(str), 2000);
+	  HAL_UART_Transmit(&huart2, (uint8_t*)str, strlen(str), MAX_UART_WAIT_TIME);
   }
   else
   {
 	  char *str = "\r\nError: Cannot Create Semaphore\r\n";
-	  HAL_UART_Transmit(&huart2, (uint8_t*)str, strlen(str), 2000);
+	  HAL_UART_Transmit(&huart2, (uint8_t*)str, strlen(str), MAX_UART_WAIT_TIME);
   }
 
   tx_thread_create(&Task1, "Task 1", Task1_Init, 0, threadstack1, sizeof(threadstack1), 1, 1, 0, TX_AUTO_START);
@@ -144,7 +145,7 @@ void MX_ThreadX_Init(void)
 {
   /* USER CODE BEGIN  Before_Kernel_Start */
 	char *border = "\r\n------------------------------------------------\r\n";
-	HAL_UART_Transmit(&huart2, (uint8_t *)border, strlen(border), 2000);
+	HAL_UART_Transmit(&huart2, (uint8_t *)border, strlen(border), MAX_UART_WAIT_TIME);
 
 	HAL_UART_Receive_IT(&huart2, &rx_data, 1);
 
@@ -182,7 +183,7 @@ void Task1_Init(ULONG thread_input)
 		strcat(str, "\r\nTokens Available: ");
 		strcat(str, tokenNum);
 		strcat(str, "\r\n");
-		HAL_UART_Transmit(&huart2, (uint8_t *)str, strlen(str), 2000);
+		HAL_UART_Transmit(&huart2, (uint8_t *)str, strlen(str), MAX_UART_WAIT_TIME);
 
 		tx_semaphore_get(&CountSem1, TX_WAIT_FOREVER);
 
@@ -190,7 +191,7 @@ void Task1_Init(ULONG thread_input)
 		strcpy(str, "\r\nLeaving Task 1: ");
 		strcat(str, sresource);
 		strcat(str, "\r\n\nNot Releasing Semaphore\r\n");
-		HAL_UART_Transmit(&huart2, (uint8_t *)str, strlen(str), 2000);
+		HAL_UART_Transmit(&huart2, (uint8_t *)str, strlen(str), MAX_UART_WAIT_TIME);
 
 		indx++;
 
@@ -219,7 +220,7 @@ void Task2_Init(ULONG thread_input)
 		strcat(str, "\r\nTokens Available: ");
 		strcat(str, tokenNum);
 		strcat(str, "\r\n");
-		HAL_UART_Transmit(&huart2, (uint8_t *)str, strlen(str), 2000);
+		HAL_UART_Transmit(&huart2, (uint8_t *)str, strlen(str), MAX_UART_WAIT_TIME);
 
 		tx_semaphore_get(&CountSem1, TX_WAIT_FOREVER);
 
@@ -227,7 +228,7 @@ void Task2_Init(ULONG thread_input)
 		strcpy(str, "\r\nLeaving Task 2: ");
 		strcat(str, sresource);
 		strcat(str, "\r\n\nNot Releasing Semaphore\r\n");
-		HAL_UART_Transmit(&huart2, (uint8_t *)str, strlen(str), 2000);
+		HAL_UART_Transmit(&huart2, (uint8_t *)str, strlen(str), MAX_UART_WAIT_TIME);
 
 		indx++;
 
@@ -256,7 +257,7 @@ void Task3_Init(ULONG thread_input)
 		strcat(str, "\r\nTokens Available: ");
 		strcat(str, tokenNum);
 		strcat(str, "\r\n");
-		HAL_UART_Transmit(&huart2, (uint8_t *)str, strlen(str), 2000);
+		HAL_UART_Transmit(&huart2, (uint8_t *)str, strlen(str), MAX_UART_WAIT_TIME);
 
 		tx_semaphore_get(&CountSem1, TX_WAIT_FOREVER);
 
@@ -264,7 +265,7 @@ void Task3_Init(ULONG thread_input)
 		strcpy(str, "\r\nLeaving Task 3: ");
 		strcat(str, sresource);
 		strcat(str, "\r\n\nNot Releasing Semaphore\r\n");
-		HAL_UART_Transmit(&huart2, (uint8_t *)str, strlen(str), 2000);
+		HAL_UART_Transmit(&huart2, (uint8_t *)str, strlen(str), MAX_UART_WAIT_TIME);
 
 		indx++;
 
@@ -293,7 +294,7 @@ void Task4_Init(ULONG thread_input)
 		strcat(str, "\r\nTokens Available: ");
 		strcat(str, tokenNum);
 		strcat(str, "\r\n");
-		HAL_UART_Transmit(&huart2, (uint8_t *)str, strlen(str), 2000);
+		HAL_UART_Transmit(&huart2, (uint8_t *)str, strlen(str), MAX_UART_WAIT_TIME);
 
 		tx_semaphore_get(&CountSem1, TX_WAIT_FOREVER);
 
@@ -301,7 +302,7 @@ void Task4_Init(ULONG thread_input)
 		strcpy(str, "\r\nLeaving Task 4: ");
 		strcat(str, sresource);
 		strcat(str, "\r\n\nNot Releasing Semaphore\r\n");
-		HAL_UART_Transmit(&huart2, (uint8_t *)str, strlen(str), 2000);
+		HAL_UART_Transmit(&huart2, (uint8_t *)str, strlen(str), MAX_UART_WAIT_TIME);
 
 		indx++;
 
