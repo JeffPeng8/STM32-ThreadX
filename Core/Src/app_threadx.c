@@ -38,7 +38,8 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-#define STACK_SIZE  1024
+#define STACK_SIZE             1024
+#define MAX_UART_WAIT_TIME     100
 
 /* USER CODE END PD */
 
@@ -104,7 +105,7 @@ void MX_ThreadX_Init(void)
 {
   /* USER CODE BEGIN  Before_Kernel_Start */
 	char *border = "\r\n------------------------------------------------\r\n";
-	HAL_UART_Transmit(&huart2, (uint8_t *)border, strlen(border), 2000);
+	HAL_UART_Transmit(&huart2, (uint8_t *)border, strlen(border), MAX_UART_WAIT_TIME);
 
   /* USER CODE END  Before_Kernel_Start */
 
@@ -119,7 +120,7 @@ void MX_ThreadX_Init(void)
 void PT_Callback(ULONG input)
 {
 	char *str = "\r\nSending From Period TIM\r\n";
-	HAL_UART_Transmit(&huart2, (uint8_t *)str, strlen(str), 100);
+	HAL_UART_Transmit(&huart2, (uint8_t *)str, strlen(str), MAX_UART_WAIT_TIME);
 }
 
 void OS_Callback(ULONG input)
@@ -127,7 +128,7 @@ void OS_Callback(ULONG input)
 	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_RESET);
 
 //	char *str = "\r\nSending From One Shot TIM\r\n";
-//	HAL_UART_Transmit(&huart2, (uint8_t *)str, strlen(str), 100);
+//	HAL_UART_Transmit(&huart2, (uint8_t *)str, strlen(str), MAX_UART_WAIT_TIME);
 }
 
 void UART_Task(ULONG thread_input)
@@ -137,7 +138,7 @@ void UART_Task(ULONG thread_input)
 	while(1)
 	{
 		char *str = "\r\nSending From UART Thread\r\n";
-		HAL_UART_Transmit(&huart2, (uint8_t *)str, strlen(str), 100);
+		HAL_UART_Transmit(&huart2, (uint8_t *)str, strlen(str), MAX_UART_WAIT_TIME);
 		tx_thread_sleep(200);
 	}
 }
