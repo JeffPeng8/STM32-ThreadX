@@ -38,7 +38,8 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-#define STACK_SIZE  1024
+#define STACK_SIZE             1024
+#define MAX_UART_WAIT_TIME     100
 
 /* USER CODE END PD */
 
@@ -76,12 +77,12 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 			if(tx_queue_front_send(&Queue1, &data, TX_NO_WAIT) == TX_SUCCESS)
 			{
 				str = "\r\nSending Data To Queue Via ISR\r\n";
-				HAL_UART_Transmit(huart, (uint8_t *)str, strlen(str), 2000);
+				HAL_UART_Transmit(huart, (uint8_t *)str, strlen(str), MAX_UART_WAIT_TIME);
 			}
 			else
 			{
                 str = "\r\nError: Queue Is Currently Full\r\n";
-                HAL_UART_Transmit(huart, (uint8_t *)str, strlen(str), 2000);
+                HAL_UART_Transmit(huart, (uint8_t *)str, strlen(str), MAX_UART_WAIT_TIME);
 			}
 		}
 	}
@@ -117,12 +118,12 @@ UINT App_ThreadX_Init(VOID *memory_ptr)
 	if(queue_status != TX_SUCCESS)
 	{
 		char *str = "\r\n\Error: Cannot Create Integer Queue/r/n";
-		HAL_UART_Transmit(&huart2, (uint8_t*)str, strlen(str), 2000);
+		HAL_UART_Transmit(&huart2, (uint8_t*)str, strlen(str), MAX_UART_WAIT_TIME);
 	}
 	else
 	{
 		char *str = "\r\nInteger Queue Created Successfully\r\n";
-		HAL_UART_Transmit(&huart2, (uint8_t*)str, strlen(str), 2000);
+		HAL_UART_Transmit(&huart2, (uint8_t*)str, strlen(str), MAX_UART_WAIT_TIME);
 	}
 
   tx_thread_create(&SenderTask1, "SenderTask1", SenderTask1_Init, 0, threadstack1, sizeof(threadstack1), 1, 1, 0, TX_AUTO_START);
@@ -143,7 +144,7 @@ void MX_ThreadX_Init(void)
 {
   /* USER CODE BEGIN  Before_Kernel_Start */
 	char *border = "\r\n------------------------------------------------\r\n";
-	HAL_UART_Transmit(&huart2, (uint8_t *)border, strlen(border), 2000);
+	HAL_UART_Transmit(&huart2, (uint8_t *)border, strlen(border), MAX_UART_WAIT_TIME);
 
 	HAL_UART_Receive_IT(&huart2, &rx_data, 1);
 
@@ -165,22 +166,22 @@ void SenderTask1_Init(ULONG thread_input)
 	while(1)
 	{
 		char *str = "\r\n\nEntered Sender Task 1, Sending Data To Queue\r\n";
-		HAL_UART_Transmit(&huart2, (uint8_t *)str, strlen(str), 2000);
+		HAL_UART_Transmit(&huart2, (uint8_t *)str, strlen(str), MAX_UART_WAIT_TIME);
 
 //		if(tx_queue_send(&Queue1, &data, TX_WAIT_FOREVER) == TX_SUCCESS)
 //		{
 //			char *str2 = "\r\nSuccessfully Sent Data To Queue\r\n";
-//			HAL_UART_Transmit(&huart2, (uint8_t *)str2, strlen(str2), 2000);
+//			HAL_UART_Transmit(&huart2, (uint8_t *)str2, strlen(str2), MAX_UART_WAIT_TIME);
 //		}
 
 		if(tx_queue_send(&Queue1, &data, TX_NO_WAIT) == TX_SUCCESS)
 		{
 			char *str2 = "\r\nSuccessfully Sent Data To Queue\r\n";
-			HAL_UART_Transmit(&huart2, (uint8_t *)str2, strlen(str2), 2000);
+			HAL_UART_Transmit(&huart2, (uint8_t *)str2, strlen(str2), MAX_UART_WAIT_TIME);
 		}
 
 		char *str3 = "\r\nLeaving Sender Task 1\r\n";
-		HAL_UART_Transmit(&huart2, (uint8_t *)str3, strlen(str3), 2000);
+		HAL_UART_Transmit(&huart2, (uint8_t *)str3, strlen(str3), MAX_UART_WAIT_TIME);
 
 		tx_thread_sleep(200);
 	}
@@ -193,22 +194,22 @@ void SenderTask2_Init(ULONG thread_input)
 	while(1)
 	{
 		char *str = "\r\n\nEntered Sender Task 2, Sending Data To Queue\r\n";
-		HAL_UART_Transmit(&huart2, (uint8_t *)str, strlen(str), 2000);
+		HAL_UART_Transmit(&huart2, (uint8_t *)str, strlen(str), MAX_UART_WAIT_TIME);
 
 //		if(tx_queue_send(&Queue1, &data, TX_WAIT_FOREVER) == TX_SUCCESS)
 //		{
 //			char *str2 = "\r\nSuccessfully Sent Data To Queue\r\n";
-//			HAL_UART_Transmit(&huart2, (uint8_t *)str2, strlen(str2), 2000);
+//			HAL_UART_Transmit(&huart2, (uint8_t *)str2, strlen(str2), MAX_UART_WAIT_TIME);
 //		}
 
 		if(tx_queue_send(&Queue1, &data, TX_NO_WAIT) == TX_SUCCESS)
 		{
 			char *str2 = "\r\nSuccessfully Sent Data To Queue\r\n";
-			HAL_UART_Transmit(&huart2, (uint8_t *)str2, strlen(str2), 2000);
+			HAL_UART_Transmit(&huart2, (uint8_t *)str2, strlen(str2), MAX_UART_WAIT_TIME);
 		}
 
 		char *str3 = "\r\nLeaving Sender Task 2\r\n";
-		HAL_UART_Transmit(&huart2, (uint8_t *)str3, strlen(str3), 2000);
+		HAL_UART_Transmit(&huart2, (uint8_t *)str3, strlen(str3), MAX_UART_WAIT_TIME);
 
 		tx_thread_sleep(200);
 	}
@@ -222,27 +223,27 @@ void ReceiverTask1_Init(ULONG thread_input)
 	{
 		uint8_t RxMsg[50];
         char *str = "\r\n\nEntered Receiver Task 1, Receiving Data From Queue\r\n";
-        HAL_UART_Transmit(&huart2, (uint8_t *)str, strlen(str), 2000);
+        HAL_UART_Transmit(&huart2, (uint8_t *)str, strlen(str), MAX_UART_WAIT_TIME);
 
         if(tx_queue_receive(&Queue1, &received, TX_WAIT_FOREVER) != TX_SUCCESS)
         {
 			char *str2 = "\r\nError: Failed To Receive Data From Queue\r\n";
-			HAL_UART_Transmit(&huart2, (uint8_t *)str2, strlen(str2), 2000);
+			HAL_UART_Transmit(&huart2, (uint8_t *)str2, strlen(str2), MAX_UART_WAIT_TIME);
         }
         else
         {
 			int length = sprintf((char*)RxMsg, "\r\nSuccessfully Received Data From Queue: %d\r\n", received);
-			HAL_UART_Transmit(&huart2, RxMsg, length, 2000);
+			HAL_UART_Transmit(&huart2, RxMsg, length, MAX_UART_WAIT_TIME);
         }
 
 //        if(tx_queue_receive(&Queue1, &received, TX_WAIT_FOREVER) == TX_SUCCESS)
 //        {
 //			int length = sprintf((char*)RxMsg, "\r\nSuccessfully Received Data From Queue: %d\r\n", received);
-//			HAL_UART_Transmit(&huart2, RxMsg, length, 2000);
+//			HAL_UART_Transmit(&huart2, RxMsg, length, MAX_UART_WAIT_TIME);
 //        }
 
 		char *str3 = "\r\nLeaving Receiver Task 1\r\n";
-		HAL_UART_Transmit(&huart2, (uint8_t *)str3, strlen(str3), 2000);
+		HAL_UART_Transmit(&huart2, (uint8_t *)str3, strlen(str3), MAX_UART_WAIT_TIME);
 
 		tx_thread_sleep(500);
 	}
