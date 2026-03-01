@@ -68,6 +68,9 @@ UINT sem_status;
 
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN PFP */
+void Handle_Mutex(char *str);
+void Handle_BS(char *str);
+
 void Task1_Init(ULONG thread_input);
 void Task2_Init(ULONG thread_input);
 void Task3_Init(ULONG thread_input);
