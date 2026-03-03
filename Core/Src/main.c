@@ -90,6 +90,10 @@ int main(void)
   MX_USART2_UART_Init();
   /* USER CODE BEGIN 2 */
 
+  // ThreadX Execution Flow:
+  // Mx_ThreadX_Init → _tx_initialize_kernel_enter → tx_application_define → App_ThreadX_Init → <THREAD_NAME>
+
+  // Binary Semaphores (ThreadX):
   // A semaphore is a kernel object used to control thread access to shared resources and/or coordinate thread execution
   // In RTOS, resources refer to memory spaces and hardware peripherals that threads have to share for your system to work properly
   // Semaphores are also used for signaling between threads, which is done by calling...
