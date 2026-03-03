@@ -90,6 +90,34 @@ int main(void)
   MX_USART2_UART_Init();
   /* USER CODE BEGIN 2 */
 
+  // A semaphore is a kernel object used to control thread access to shared resources and/or coordinate thread execution
+  // In RTOS, resources refer to memory spaces and hardware peripherals that threads have to share for your system to work properly
+  // Semaphores are also used for signaling between threads, which is done by calling...
+  // ...the tx_semaphore_put( ) and tx_semaphore_get( ) functions in ThreadX
+  // Unlike mutexes, semaphores have no ownership. As a result, any thread can release a semaphore by calling tx_semaphore_put( )...
+  // ...not just the thread using the said semaphore at that moment in time
+
+  // Binary semaphores are semaphores that can only hold values of 0 or 1
+  // 1 = semaphore is available
+  // 0 = semaphore is not available
+  // When a thread takes the semaphore, it is set from 1 to 0
+  // All other threads that need the semaphore to fully execute are blocked until the first thread releases the semaphore
+  // When a thread releases the semaphore, it is set from 0 to 1
+  // From there, the next highest-priority thread waiting on the semaphore can take it and start running
+
+  // While threads waiting on semaphores are considered to be blocked, tasks stuck in loops such as while(GPIO) are NOT
+  // Instead, they still considered to be running/ready, so the code behavior differs from if they were blocked
+  // So until these threads exit their loops and finish executing, no threads of lower priority can execute
+  // Instead, only threads with higher or equal priority can execute
+
+  // ThreadX only has native support for counting semaphores, not binary ones.
+  // As a result, a binary semaphore in ThreadX is just a counting semaphore used in a binary manner
+
+  // A kernel object is a data structure provided and managed by the RTOS kernel
+  // It has a defined state, a memory address, and a set of operations
+  // They are also referred to as control blocks
+  // In RTOS, threads, semaphores, mutexes, events, queues, and timers are all kernel objects
+
   char *border = "\r\n------------------------------------------------\r\n";
   HAL_UART_Transmit(&huart2, (uint8_t *)border, strlen(border), 2000);
 
