@@ -90,6 +90,17 @@ int main(void)
   MX_USART2_UART_Init();
   /* USER CODE BEGIN 2 */
 
+  // ThreadX Execution Flow:
+  // Mx_ThreadX_Init → _tx_initialize_kernel_enter → tx_application_define → App_ThreadX_Init → <THREAD_NAME>
+
+  // Counting Semaphores (ThreadX):
+  // Unlike binary semaphores (0 or 1), counting semaphores can hold values from 0 to N
+  // Each semaphore has a pool of tokens, with a total count of N tokens
+  // For threads that use counting semaphores, they can only execute when they have one of these tokens
+  // Every time a thread takes a token, the count on the semaphore decreases by 1
+  // Likewise, every time a thread releases a token, the count on the semaphore increments by 1
+  // Once the count hits 0, any thread that needs a semaphore to fully execute will be blocked until a token becomes available
+
   /* USER CODE END 2 */
 
   MX_ThreadX_Init();
