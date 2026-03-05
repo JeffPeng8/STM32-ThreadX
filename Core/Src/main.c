@@ -94,6 +94,47 @@ int main(void)
 
   /* USER CODE END 2 */
 
+  // ThreadX Execution Flow:
+  // Mx_ThreadX_Init → _tx_initialize_kernel_enter → tx_application_define → App_ThreadX_Init → <THREAD_NAME>
+
+  // Mutexes (ThreadX):
+  // Like binary semaphores, mutexes are kernel objects that are used to ensure that only one thread can access a shared resource...
+  // ...(such as memory spaces or hardware peripherals) at a time
+  // However, only mutexes support priority inheritance. Binary semaphores do not
+  // As a result, while mutexes can protect against priority inversion, binary semaphores cannot
+
+  // Priority inversion:
+  // A high-priority thread waits on a shared resource held by a low-priority thread
+  // A medium-priority thread that doesn't need the shared resource runs instead…
+  // ...delaying the low-priority thread from releasing it…
+  // ...which in turn, delays the high-priority thread even more
+  // So medium delays low and low delays high → medium indirectly delays high
+
+  // Priority inheritance:
+  // Used to prevent priority inversion from happening in your code
+  // Works by auto-boosting the priority of the thread holding the mutex…
+  // ...to match the priority of the highest-priority thread that's waiting for it
+  // This enables the first thread to finish running, release the mutex…
+  // ...and quickly unblock the highest-priority thread that's waiting for it
+  // However, keep in mind that the priority boost only lasts until the mutex is released
+  // Once that happens, then the first thread's original priority level is restored
+
+  // Mutexes vs. Semaphores
+  // Mutexes are primarily used for locking shared resources such as memory spaces or hardware peripherals
+  // Semaphores, on the other hand, are also used for signaling between threads
+  // Unlike semaphores, mutexes have ownership
+  // This means that the threads that takes the mutex must be the one to release it
+
+  // Unlike semaphores, mutexes don't work with ISRs for three diff reasons:
+  // The first is that ISRs cannot be blocked and suspended, which can’t be guaranteed if they use mutexes
+  // The second is that mutexes can only be owned by threads, which means that an ISR cannot take or release them
+  // Even trying to take or release a mutex in an ISR will also return an error
+  // The third is that using mutexes in ISRs can lead to code deadlocks
+  // For example, if an ISR interrupts a thread that currently holds a mutex and then tries to take that same mutex...
+  // that will lead to a deadlock bcuz the holding thread cannot run until the ISR finishes..
+  // ...and the ISR cannot possibly finish since nobody can take the mutex until the holding thread releases it
+  // It's basically a paradox
+
   MX_ThreadX_Init();
 
   /* We should never get here as control is now taken by the scheduler */

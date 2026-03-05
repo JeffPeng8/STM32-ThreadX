@@ -69,7 +69,7 @@ UINT sem_status;
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN PFP */
 void Handle_Mutex(char *str);
-void Handle_BS(char *str);
+void Handle_Semaphore(char *str);
 
 void Task1_Init(ULONG thread_input);
 void Task2_Init(ULONG thread_input);
@@ -146,6 +146,7 @@ void MX_ThreadX_Init(void)
 
 /* USER CODE BEGIN 1 */
 
+// Takes and releases a mutex
 void Handle_Mutex(char *str)
 {
 	// acquires the mutex
@@ -158,8 +159,8 @@ void Handle_Mutex(char *str)
 	tx_mutex_put(&Mutex1);
 }
 
-// BS stands for binary semaphore
-void Handle_BS(char *str)
+// Takes and releases a semaphore
+void Handle_Semaphore(char *str)
 {
 	// acquires the semaphore
 	tx_semaphore_get(&BinSem1, TX_WAIT_FOREVER);
@@ -171,6 +172,7 @@ void Handle_BS(char *str)
 	tx_semaphore_ceiling_put(&BinSem1, 1);
 }
 
+// Prints the UART logs for task 1
 void Task1_Init(ULONG thread_input)
 {
 	while(1)
@@ -189,6 +191,7 @@ void Task1_Init(ULONG thread_input)
 	}
 }
 
+// Prints the UART logs for task 2
 void Task2_Init(ULONG thread_input)
 {
 	while(1)
@@ -207,6 +210,7 @@ void Task2_Init(ULONG thread_input)
 	}
 }
 
+// Prints the UART logs for task 3
 void Task3_Init(ULONG thread_input)
 {
 	while(1)
