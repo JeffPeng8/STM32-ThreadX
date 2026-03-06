@@ -92,8 +92,6 @@ int main(void)
   MX_USART2_UART_Init();
   /* USER CODE BEGIN 2 */
 
-  /* USER CODE END 2 */
-
   // ThreadX Execution Flow:
   // Mx_ThreadX_Init → _tx_initialize_kernel_enter → tx_application_define → App_ThreadX_Init → <THREAD_NAME>
 
@@ -134,6 +132,8 @@ int main(void)
   // that will lead to a deadlock bcuz the holding thread cannot run until the ISR finishes..
   // ...and the ISR cannot possibly finish since nobody can take the mutex until the holding thread releases it
   // It's basically a paradox
+
+  /* USER CODE END 2 */
 
   MX_ThreadX_Init();
 
