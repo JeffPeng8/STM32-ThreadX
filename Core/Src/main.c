@@ -92,7 +92,18 @@ int main(void)
   MX_USART2_UART_Init();
   /* USER CODE BEGIN 2 */
 
-  // NOTE: Priority ordering with queues in ThreadX DOES NOT work the same way as it does in FreeRTOS
+  // ThreadX Execution Flow:
+  // Mx_ThreadX_Init → _tx_initialize_kernel_enter → tx_application_define → App_ThreadX_Init → <THREAD_NAME>
+
+  // Queues are kernel objects that are used to pass data between threads, or between ISRs and threads
+  // They also have a fixed size and are basically thread-safe buffers
+  // Like standard queues, ThreadX queues are FIFO
+  // A sender copies a fixed-size message into the queue and a receiver copies it back out
+  // In the context of queues, senders are threads that call tx_queue_send( ), while receivers are threads that call tx_queue_receive( )
+  // When the queue is full, the sender gets blocked until space becomes available in the queue
+  // When a queue is empty, the receiver gets blocked until a message gets pushed into the queue
+  // A free space in the queue typically becomes available when the receiver pops a message from the queue
+  // You can also completely empty out a queue by calling tx_queue_flush( )
 
   /* USER CODE END 2 */
 
