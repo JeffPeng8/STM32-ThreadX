@@ -103,6 +103,13 @@ int main(void)
   // A task is a single stream of executable instructions that can be paused, resumed, or ran by a scheduler
   // The scheduler is the OS component that decides which thread gets to execute at any given point in time
 
+  // When you create a thread in ThreadX, you must provide a function for that thread to tx_thread_create as a function pointer
+  // This function holds all the execution logic (variable assignments, function calls, conditional statements, etc) for its corresponding thread...
+  // ...and also serves as the main entry point for that thread, just like how main serves as the entry point for the standard C program
+  // In most RTOS designs, this function usually contains an infinite loop so that it never returns and the thread can run indefinitely
+  // ThreadX calls this function once to start the thread
+  // Then from that point on, the thread is paused and resumed by the scheduler via context switching
+
   // A thread can be in one of four states: running, ready, blocked, or suspended
   // Every thread also has a priority, with higher-priority threads always being considered first to run
   // In a RTOS like ThreadX, the scheduler chooses which thread gets to run based on its set priority and its current state
@@ -121,11 +128,11 @@ int main(void)
   // ...instead of starving each other out for MCU time
 
   // EXTRA:
-  // threads are still considered to be running even when they are stuck in loops and doing nothing productive
-  // threads can be created inside another thread, as seen in the Florence Controller FW
-  // time-slicing is per-thread and optional
-  // You enable or disable it by default at thread creation by setting the time_slice argument in tx_thread_create( )
-  // You can also change the time_slice argument at runtime by calling tx_thread_time_slice_change( )
+  // Threads are still considered to be running even when they are stuck in loops and doing nothing productive
+  // Threads can be created inside another thread, as seen in the Florence Controller FW
+  // Time-slicing is per-thread and optional
+  // You enable or disable it by default at thread creation by setting the time_slice argument in tx_thread_create
+  // You can also change the time_slice argument at runtime by calling tx_thread_time_slice_change
 
   char *border = "\r\n------------------------------------------------\r\n";
   HAL_UART_Transmit(&huart2, (uint8_t *)border, strlen(border), 2000);
