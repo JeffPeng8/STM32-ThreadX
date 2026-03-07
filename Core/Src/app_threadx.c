@@ -136,8 +136,6 @@ void OS_Callback(ULONG input)
 
 void UART_Task(ULONG thread_input)
 {
-	tx_timer_activate(&periodTIM);
-
 	while(1)
 	{
 		char *str = "\r\nSending From UART Thread\r\n";
@@ -156,6 +154,8 @@ void LED_Task(ULONG thread_input)
 		if(!(HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_13)))
 		{
 			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_SET);
+
+			// Rearms the OS timer
 			tx_timer_change(&osTIM, 400, 0);
 			tx_timer_activate(&osTIM);
 		}
