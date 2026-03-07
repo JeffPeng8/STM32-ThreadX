@@ -92,6 +92,23 @@ int main(void)
   MX_USART2_UART_Init();
   /* USER CODE BEGIN 2 */
 
+  // Timers (ThreadX):
+  // A timer is a kernel object that automatically runs a function after a certain number of RTOS ticks
+  // This function is called a timer callback and must be provided to tx_timer_create as a function pointer
+  // It also gets executed once the timer expires
+  // There are two main types of timers in ThreadX: one-shot timers and periodic timers
+  // If you set the reschedule_ticks argument in tx_timer_create( ) to 0, you’ll get a one-shot timer
+  // If you set that argument to a nonzero value instead, then you’ll get a periodic timer
+  // The difference between the two is that one-shot timers do not auto-restart themselves after they first expire
+  // Periodic timers, on the other hand, auto-restart themselves every time they expire...
+  // ...enabling them to run indefinitely and execute their callbacks at the preset interval (reschedule_ticks)
+  // As a result, you’ll usually want to set the initial_ticks == reschedule_ticks...
+  //...in tx_timer_create when you’re using periodic timers
+
+  // ThreadX timers are software timers and not hardware timers such as the TIM peripherals available on STM32 MCUs
+  // NEVER BLOCK OR SUSPEND INSIDE A TIMER CALLBACK
+  // Blocking or suspending functions in ThreadX should only be done inside threads
+
   /* USER CODE END 2 */
 
   MX_ThreadX_Init();

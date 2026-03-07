@@ -117,12 +117,15 @@ void MX_ThreadX_Init(void)
 }
 
 /* USER CODE BEGIN 1 */
+
+// Callback for the PT timer
 void PT_Callback(ULONG input)
 {
 	char *str = "\r\nSending From Period TIM\r\n";
 	HAL_UART_Transmit(&huart2, (uint8_t *)str, strlen(str), MAX_UART_WAIT_TIME);
 }
 
+// Callback for the OS timer
 void OS_Callback(ULONG input)
 {
 	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_RESET);
