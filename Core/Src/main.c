@@ -92,6 +92,21 @@ int main(void)
   MX_USART2_UART_Init();
   /* USER CODE BEGIN 2 */
 
+  // ThreadX Execution Flow:
+  // Mx_ThreadX_Init → _tx_initialize_kernel_enter → tx_application_define → App_ThreadX_Init → <THREAD_NAME>
+
+  // Events (ThreadX):
+  // Event flags are kernel objects used for signaling to threads that certain events have occurred
+  // They are organized into event flag groups, with each group containing 32 flags
+  // In an event flag group, each flag is just one bit and represents a different event type...
+  // ...(ex: strobe command received, radar speed changed, battery power detected)
+
+  // The two main functions for event flags in ThreadX are tx_event_flags_get and tx_event_flags_set
+  // The first function is primarily used to read or wait on event flags, while the second function is primarily used to set or clear event flags
+  // Event-driven programming can be enabled in ThreadX by coding the threads in your system to block until certain event flags have been set
+  // You can also code the threads in your system to block until ANY or ALL of the event flags that they are waiting on having been set
+  // ALWAYS MAKE SURE TO CLEAR YOUR EVENT FLAGS AFTER YOU READ OR WAIT ON THEM!!!
+
   /* USER CODE END 2 */
 
   MX_ThreadX_Init();
