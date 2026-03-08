@@ -105,7 +105,10 @@ int main(void)
   // The first function is primarily used to read or wait on event flags, while the second function is primarily used to set or clear event flags
   // Event-driven programming can be enabled in ThreadX by coding the threads in your system to block until certain event flags have been set
   // You can also code the threads in your system to block until ANY or ALL of the event flags that they are waiting on having been set
-  // ALWAYS MAKE SURE TO CLEAR YOUR EVENT FLAGS WHEN YOU GET THEM!!!
+
+  // Keep in mind that event flags are level-based and not count-based
+  // This means that that are great for checking for state changes, but not for tallying up how many times a certain event has occurred
+  // Also, unless you need to keep them on, ALWAYS CLEAR EVENT FLAGS AFTER YOU GET THEM!!!
 
   /* USER CODE END 2 */
 
