@@ -102,13 +102,13 @@ int main(void)
   // ...(ex: strobe command received, radar speed changed, battery power detected)
 
   // The two main functions for event flags in ThreadX are tx_event_flags_get and tx_event_flags_set
-  // The first function is primarily used to read or wait on event flags, while the second function is primarily used to set or clear event flags
+  // The first function is used to read or wait on event flags, while the second function is used to set (1) or clear (0) event flags
   // Event-driven programming can be enabled in ThreadX by coding the threads in your system to block until certain event flags have been set
   // You can also code the threads in your system to block until ANY or ALL of the event flags that they are waiting on having been set
 
   // Keep in mind that event flags are level-based and not count-based
-  // This means that that are great for checking for state changes, but not for tallying up how many times a certain event has occurred
-  // Also, unless you need to keep them on, ALWAYS CLEAR EVENT FLAGS AFTER YOU GET THEM!!!
+  // This means that that are great for checking for state changes, but useless for tallying up how many times a certain event has occurred
+  // Also, unless you intend to keep them on, ALWAYS CLEAR EVENT FLAGS WHEN YOU GET THEM!!!
 
   /* USER CODE END 2 */
 

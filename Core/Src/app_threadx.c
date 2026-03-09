@@ -91,6 +91,7 @@ UINT App_ThreadX_Init(VOID *memory_ptr)
   /* USER CODE END App_ThreadX_MEM_POOL */
 
   /* USER CODE BEGIN App_ThreadX_Init */
+
   mutex_status = tx_mutex_create(&Mutex1, "Mutex1", TX_INHERIT);
   event_status = tx_event_flags_create(&Event1, "Event 1");
 
